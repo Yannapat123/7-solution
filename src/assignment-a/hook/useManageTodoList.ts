@@ -55,6 +55,7 @@ export const useManageTodoList = () => {
     const [items, setItems] = useState<Tdata[]>(data)
     const [fruitList, setFruitList] = useState<Tdata[]>([])
     const [vegetableList, setVegetableList] = useState<Tdata[]>([])
+    const [deleteGroup, setDeletGruop] = useState<Tdata[]>([])
 
     const handleAddTodo = (type: string, name: string, index: number) => {
         const listData = {
@@ -64,16 +65,54 @@ export const useManageTodoList = () => {
         if (type === 'Fruit') {
 
             setFruitList([...fruitList, listData]);
+            setDeletGruop([...deleteGroup, listData])
 
         } else {
             setVegetableList([...vegetableList, listData]);
+            setDeletGruop([...deleteGroup, listData])
+
 
         }
         const newTodos = [...items];
         newTodos.splice(index, 1);
         setItems(newTodos);
     }
+    const deleteAddTodo = () => {
+        // console.log('t', items)
+        const newArr = [...deleteGroup];
+        newArr.splice(0, 1);
+        setDeletGruop(newArr)
+
+        // console.log(deleteGroup[deleteGroup.length - 1])
+        // const find = deleteGroup[deleteGroup.length - 1]
+        const find = deleteGroup[0]
+
+
+        if (find?.type === 'Fruit') {
+            const newTodos = [...fruitList];
+
+            const filteredItems = newTodos.filter(item => item.name !== find.name);
+            setFruitList(filteredItems);
+
+        } else if (find?.type === 'Vegetable') {
+            const newTodos = [...vegetableList];
+            const filteredItems = newTodos.filter(item => item.name !== find.name);
+            setVegetableList(filteredItems);
+
+        } else {
+            return 0
+        }
+        const updatedItems = [...items, find];
+
+        setItems(updatedItems)
+
+        // newArr.splice(-1, 1);
+        // setDeletGruop(newArr)
+
+
+    }
     return {
+        deleteAddTodo,
         items,
         vegetableList,
         fruitList,

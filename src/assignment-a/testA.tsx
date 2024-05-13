@@ -6,7 +6,7 @@ import FruitList from './components/FruitList';
 import VegetableList from './components/VegetableList';
 
 export default function TestA() {
-    const { items, handleAddTodo, fruitList, vegetableList } = useManageTodoList()
+    const { items, handleAddTodo, fruitList, vegetableList, deleteAddTodo } = useManageTodoList()
 
     return (
         <Box sx={{ p: 4 }}>
@@ -15,7 +15,9 @@ export default function TestA() {
                     {items.map((item, index) => (
                         <Box key={index} sx={{ mt: 2 }}>
                             <Button
-                                onClick={() => handleAddTodo(item.type, item.name, index)}
+                                onClick={() => handleAddTodo(item.type, item.name, index)
+
+                                }
                                 sx={{
                                     boxShadow: 2,
                                     width: '8rem',
@@ -28,10 +30,16 @@ export default function TestA() {
 
                 </Grid>
                 <Grid item xs={4}>
-                    <FruitList fruitList={fruitList} />
+                    <Box onClick={deleteAddTodo}>
+                        <FruitList fruitList={fruitList} />
+                    </Box>
                 </Grid>
                 <Grid item xs={4}>
-                    <VegetableList vegetableList={vegetableList} />
+                    <Box onClick={deleteAddTodo}>
+
+                        <VegetableList vegetableList={vegetableList} />
+                    </Box>
+
 
                 </Grid>
             </Grid>
